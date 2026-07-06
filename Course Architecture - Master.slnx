@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/1 - Frontend (Presentation)/">
+    <Project Path="src/Architecture.API/Architecture.API.csproj" Id="28193d50-165e-494d-9e15-2d828b7d1ec6" />
+  </Folder>
+  <Folder Name="/2 - Backend (Libraries)/">
+    <Project Path="src/Architecture.Business/Architecture.Business.csproj" Id="ac84ef55-b98c-48f5-9362-4ffcc77aee61" />
+    <Project Path="src/Architecture.Data/Architecture.Data.csproj" Id="b47bda5f-218c-44d5-b117-28cbe9f00997" />
+  </Folder>
+</Solution>
