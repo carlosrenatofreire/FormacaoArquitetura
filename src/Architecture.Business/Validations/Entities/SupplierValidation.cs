@@ -29,3 +29,4 @@ namespace Architecture.Business.Validations.Entities
         }
 
     }
+}

@@ -1,4 +1,5 @@
-﻿using Architecture.Business.Models.Shareds;
+﻿using Architecture.Business.Models.Internals.Entities;
+using Architecture.Business.Models.Shareds;
 
 namespace Architecture.Business.Models.Internals.Parameters
 {

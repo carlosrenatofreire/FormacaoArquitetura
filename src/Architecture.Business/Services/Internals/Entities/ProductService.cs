@@ -2,22 +2,22 @@
 using Architecture.Business.Interfaces.Shareds;
 using Architecture.Business.Models.Internals.Entities;
 using Architecture.Business.Services.Shareds;
+using Architecture.Business.Validations.Entities;
 
 namespace Architecture.Business.Services.Internals.Entities
 {
     public class ProductService : BaseService, IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository,
-                              INotifier notifier) 
-                              : base(notifier)
+        public ProductService(IProductRepository productRepository, INotifier notifier) : base(notifier)
         {
             _productRepository = productRepository;
         }
 
         public async Task Add(Product product)
         {
-            // TODO: Implementar a validacao de negocio (Fluent Validation)
+            // Validacao de negocio (Fluent Validation)
+            if (!ExecuteValidation(new ProductValidation(),product)) return;
 
             // TODO: Implementar a validacao no banco de Dados 
 
@@ -27,15 +27,14 @@ namespace Architecture.Business.Services.Internals.Entities
 
         public async Task Update(Product product)
         {
-            // TODO: Implementar a validacao de negocio (Fluent Validation)
+            // Validacao de negocio (Fluent Validation)
+            if (!ExecuteValidation(new ProductValidation(), product)) return;
 
             await _productRepository.Update(product);
         }
 
         public async Task Remove(Guid id)
         {
-            // TODO: Implementar a validacao de negocio (Fluent Validation)
-
             await _productRepository.Remove(id);
         }
 
