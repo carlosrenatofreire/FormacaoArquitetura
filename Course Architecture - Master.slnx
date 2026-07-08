@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/1 - Frontend (Presentation)/">
     <Project Path="src/Architecture.API/Architecture.API.csproj" Id="28193d50-165e-494d-9e15-2d828b7d1ec6" />
+    <Project Path="src/Architecture.Console/Architecture.Console.csproj" Id="980f1ec6-af8b-438b-926b-4dd1bdd3e646" />
+    <Project Path="src/Architeture.Mvc/Architeture.Mvc.csproj" Id="65e84538-b9a4-4162-a184-9a8fe6a4a7cf" />
   </Folder>
   <Folder Name="/2 - Backend (Libraries)/">
     <Project Path="src/Architecture.Business/Architecture.Business.csproj" Id="ac84ef55-b98c-48f5-9362-4ffcc77aee61" />
