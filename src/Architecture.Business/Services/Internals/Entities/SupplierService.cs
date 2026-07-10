@@ -11,7 +11,7 @@ namespace Architecture.Business.Services.Internals.Entities
     {
         private readonly ISupplierRepository _supplierRepository;
 
-        public SupplierService(ISupplierRepository supplierRepository, INotifier notifier) : base(notifier)
+        public SupplierService(ISupplierRepository supplierRepository, INotifierService notifier) : base(notifier)
         {
             _supplierRepository = supplierRepository;
         }
@@ -21,7 +21,12 @@ namespace Architecture.Business.Services.Internals.Entities
             // Validacao de negocio (Fluent Validation)
             if (!ExecuteValidation(new SupplierValidation(), supplier) || !ExecuteValidation(new AddressValidation(), supplier.Address)) return;
 
-            // TODO: Implementar a validacao no banco de Dados 
+            // Validacao no banco de Dados 
+            if (_supplierRepository.Find(f => f.Document == supplier.Document).Result.Any())
+            {
+                Notify("Já existe um fornecedor com este documento infomado.");
+                return;
+            }
 
             await _supplierRepository.Add(supplier);
         }
@@ -31,10 +36,38 @@ namespace Architecture.Business.Services.Internals.Entities
             // Validacao de negocio (Fluent Validation)
             if (!ExecuteValidation(new SupplierValidation(), supplier)) return;
 
+            // Validacao no banco de Dados 
+            if (_supplierRepository.Find(f => f.Document == supplier.Document && f.Id != supplier.Id).Result.Any())
+            {
+                Notify("Já existe um fornecedor com este documento infomado.");
+            }
+
             await _supplierRepository.Update(supplier);
         }
         public async Task Remove(Guid id)
         {
+            // Validacao no banco de Dados 
+            var supplier = await _supplierRepository.GetSupplierAndProductsAndAddress(id);
+
+            if (supplier == null)
+            {
+                Notify("Fornecedor não existe!");
+                return;
+            }
+
+            if (supplier.Products.Any())
+            {
+                Notify("O fornecedor possui produtos registados!");
+                return;
+            }
+
+            var address = await _supplierRepository.GetAddressBySupplierId(id);
+
+            if (address != null)
+            {
+                await _supplierRepository.RemoveSupplierAddress(address);
+            }
+
             await _supplierRepository.Remove(id);
         }
 

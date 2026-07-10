@@ -9,7 +9,7 @@ namespace Architecture.Business.Services.Internals.Entities
     public class ProductService : BaseService, IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository, INotifier notifier) : base(notifier)
+        public ProductService(IProductRepository productRepository, INotifierService notifier) : base(notifier)
         {
             _productRepository = productRepository;
         }

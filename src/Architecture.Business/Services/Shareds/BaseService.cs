@@ -7,9 +7,9 @@ namespace Architecture.Business.Services.Shareds
 {
     public abstract class BaseService
     {
-        private readonly INotifier _notifier;
+        private readonly INotifierService _notifier;
 
-        public BaseService(INotifier notifier)
+        public BaseService(INotifierService notifier)
         {
             _notifier = notifier;
         }

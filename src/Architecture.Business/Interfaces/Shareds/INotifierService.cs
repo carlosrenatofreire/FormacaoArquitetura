@@ -2,7 +2,7 @@
 
 namespace Architecture.Business.Interfaces.Shareds
 {
-    public interface INotifier
+    public interface INotifierService
     {
         bool HasNotification();
         List<Notification> GetNotifications();

@@ -3,9 +3,6 @@ using Architecture.Business.Models.Internals.Entities;
 using Architecture.Data.Contexts;
 using Architecture.Data.Repositories.Shareds;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Data.Repositories.Entities
 {
