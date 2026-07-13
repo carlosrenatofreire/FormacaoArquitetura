@@ -33,7 +33,7 @@ namespace Architeture.Mvc.Controllers.Entities
         }
 
         [AllowAnonymous]
-        [Route("supplier-data/{id:guid}")]
+        [Route("supplier-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var supplierViewModel = await GetAddressSupplier(id);
@@ -46,6 +46,7 @@ namespace Architeture.Mvc.Controllers.Entities
             return View(supplierViewModel);
         }
 
+        [HttpGet]
         [Route("supplier-new")]
         public IActionResult Create()
         {
@@ -62,6 +63,8 @@ namespace Architeture.Mvc.Controllers.Entities
             await _supplierService.Add(supplier);
 
             if (!ValidOperation()) return View(supplierViewModel);
+
+            TempData["Sucesso"] = $"O Fornecedor {supplierViewModel.Name.ToUpper()} foi incluido com sucesso!";
 
             return RedirectToAction("Index");
         }
@@ -85,12 +88,16 @@ namespace Architeture.Mvc.Controllers.Entities
         {
             if (id != supplierViewModel.Id) return NotFound();
 
+            supplierViewModel.Address = _mapper.Map<AddressViewModel>(await _supplierRepository.GetAddressBySupplierId(id));
+
             if (!ModelState.IsValid) return View(supplierViewModel);
 
             var supplier = _mapper.Map<Supplier>(supplierViewModel);
             await _supplierService.Update(supplier);
 
             if (!ValidOperation()) return View(await GetSupplierAndAddressSupplierAndProducts(id));
+
+            TempData["Sucesso"] = $"O Fornecedor {supplierViewModel.Name.ToUpper()} foi alterado com sucesso!";
 
             return RedirectToAction("Index");
         }
@@ -119,6 +126,8 @@ namespace Architeture.Mvc.Controllers.Entities
             await _supplierService.Remove(id);
 
             if (!ValidOperation()) return View(supplier);
+
+            TempData["Sucesso"] = $"O Fornecedor {supplier.Name.ToUpper()} foi excluido com sucesso!";
 
             return RedirectToAction("Index");
         }

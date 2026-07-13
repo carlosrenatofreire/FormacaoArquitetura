@@ -13,7 +13,8 @@ namespace Architeture.Mvc.Controllers.Shareds
         }
         protected bool ValidOperation()
         {
-            return !_notifier.HasNotification();
+            var notifier = !_notifier.HasNotification();
+            return notifier;
         }
     }
 }
