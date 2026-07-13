@@ -30,9 +30,9 @@ namespace Architeture.Mvc.ViewModels
         [DisplayName("Ativo?")]
         public bool Active { get; set; }
 
-        public SupplierViewModel Supplier { get; set; }
+        public SupplierViewModel? Supplier { get; set; }
 
-        public IEnumerable<SupplierViewModel> Suppliers { get; set; }
+        public IEnumerable<SupplierViewModel>? Suppliers { get; set; }
 
     }
 }
