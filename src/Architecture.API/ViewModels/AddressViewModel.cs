@@ -18,7 +18,7 @@ namespace Architecture.API.ViewModels
         public string Number { get; set; }
 
         [Display(Name = "Complemento ou Referencia")]
-        public string Complement { get; set; }
+        public string? Complement { get; set; }
 
         [Display(Name = "Freguesia")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

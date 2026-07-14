@@ -1,6 +1,8 @@
 using Architecture.API.Configurations;
 using Architecture.Data.Contexts;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.ResolveDependencies();
 
 var app = builder.Build();
+
+// Fixa a cultura em pt-PT (euro, vírgula decimal) para o binding e a formatação de decimais
+// serem sempre consistentes, independentemente da cultura da máquina onde a API corre.
+var ptPt = new[] { new CultureInfo("pt-PT") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("pt-PT"),
+    SupportedCultures = ptPt,
+    SupportedUICultures = ptPt
+});
 
 if (app.Environment.IsDevelopment())
 {

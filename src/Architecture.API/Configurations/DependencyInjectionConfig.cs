@@ -4,6 +4,7 @@ using Architecture.Business.Services.Internals.Entities;
 using Architecture.Business.Services.Shareds;
 using Architecture.Data.Contexts;
 using Architecture.Data.Repositories.Entities;
+using Architecture.Data.Shareds;
 
 namespace Architecture.API.Configurations
 {
@@ -13,6 +14,9 @@ namespace Architecture.API.Configurations
         {
             // Context
             services.AddScoped<AppDbContext>();
+
+            // Unit of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Repositories
             services.AddScoped<IProductRepository, ProductRepository>();

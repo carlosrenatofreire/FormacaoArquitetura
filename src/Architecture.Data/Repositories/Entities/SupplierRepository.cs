@@ -41,10 +41,10 @@ namespace Architecture.Data.Repositories.Entities
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task RemoveSupplierAddress(Address address)
+        public Task RemoveSupplierAddress(Address address)
         {
             Db.Addresses.Remove(address);
-            await SaveChanges();
+            return Task.CompletedTask;
         }
     }
 }

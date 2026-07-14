@@ -1,4 +1,4 @@
-﻿using Architecture.Business.Interfaces.Internals.Entities;
+using Architecture.Business.Interfaces.Internals.Entities;
 using Architecture.Business.Interfaces.Shareds;
 using Architecture.Business.Models.Internals.Entities;
 using Architecture.Business.Services.Shareds;
@@ -11,7 +11,8 @@ namespace Architecture.Business.Services.Internals.Entities
     {
         private readonly ISupplierRepository _supplierRepository;
 
-        public SupplierService(ISupplierRepository supplierRepository, INotifierService notifier) : base(notifier)
+        public SupplierService(ISupplierRepository supplierRepository, INotifierService notifier, IUnitOfWork unitOfWork)
+            : base(notifier, unitOfWork)
         {
             _supplierRepository = supplierRepository;
         }
@@ -21,7 +22,7 @@ namespace Architecture.Business.Services.Internals.Entities
             // Validacao de negocio (Fluent Validation)
             if (!ExecuteValidation(new SupplierValidation(), supplier) || !ExecuteValidation(new AddressValidation(), supplier.Address)) return;
 
-            // Validacao no banco de Dados 
+            // Validacao no banco de Dados
             if (_supplierRepository.Find(f => f.Document == supplier.Document).Result.Any())
             {
                 Notify("Já existe um fornecedor com este documento infomado.");
@@ -29,6 +30,7 @@ namespace Architecture.Business.Services.Internals.Entities
             }
 
             await _supplierRepository.Add(supplier);
+            await Commit();
         }
 
         public async Task Update(Supplier supplier)
@@ -36,17 +38,19 @@ namespace Architecture.Business.Services.Internals.Entities
             // Validacao de negocio (Fluent Validation)
             if (!ExecuteValidation(new SupplierValidation(), supplier)) return;
 
-            // Validacao no banco de Dados 
+            // Validacao no banco de Dados
             if (_supplierRepository.Find(f => f.Document == supplier.Document && f.Id != supplier.Id).Result.Any())
             {
                 Notify("Já existe um fornecedor com este documento infomado.");
+                return;
             }
 
             await _supplierRepository.Update(supplier);
+            await Commit();
         }
         public async Task Remove(Guid id)
         {
-            // Validacao no banco de Dados 
+            // Validacao no banco de Dados
             var supplier = await _supplierRepository.GetSupplierAndProductsAndAddress(id);
 
             if (supplier == null)
@@ -69,6 +73,10 @@ namespace Architecture.Business.Services.Internals.Entities
             }
 
             await _supplierRepository.Remove(id);
+
+            // Endereço + Fornecedor são gravados juntos numa única transação:
+            // ou saem ambos da base, ou nenhum sai.
+            await Commit();
         }
 
         public void Dispose()

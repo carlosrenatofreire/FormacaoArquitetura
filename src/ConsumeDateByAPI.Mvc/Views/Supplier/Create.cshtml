@@ -1,0 +1,76 @@
+@model SupplierViewModel
+
+@{
+    ViewData["Title"] = "Novo Fornecedor";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Create">
+
+            <partial name="_Summary" />
+
+            <div class="row">
+                <!-- Coluna 1: Name (Mais larga para acomodar nomes compridos) -->
+                <div class="col-md-6 form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Coluna 2: Document -->
+                <div class="col-md-3 form-group">
+                    <label asp-for="Document" class="control-label"></label>
+                    <input asp-for="Document" class="form-control" />
+                    <span asp-validation-for="Document" class="text-danger"></span>
+                </div>
+
+                <!-- Coluna 3: SupplyType e Active lado a lado ou organizados verticalmente -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="SupplierType" class="control-label"></label>
+                        <div class="d-flex gap-3 mt-1">
+                            <div class="form-check">
+                                <input type="radio" id="typeIndividual" value="1" asp-for="SupplierType" class="form-check-input" checked />
+                                <label class="form-check-label" for="typeIndividual">Individual</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" id="typeEmpresa" value="2" asp-for="SupplierType" class="form-check-input" />
+                                <label class="form-check-label" for="typeEmpresa">Empresa</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campo Active posicionado logo abaixo dos Radios dentro da mesma coluna -->
+                    <div class="form-group form-check mt-2">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Morada</h4>
+            <hr />
+
+            <partial name="_SupplierAddress" />
+
+            <div class="form-group">
+                <hr />
+
+                <input type="submit" value="Registar" class="btn btn-primary" />
+                <a class="btn btn-info" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

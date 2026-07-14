@@ -1,0 +1,73 @@
+@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Novo Produto";
+}
+
+<h3 style="padding-top: 50px">@ViewData["Title"]</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Create">
+
+            <partial name="_Summary" />
+
+            <!-- Linha 1: Fornecedor, Nome e Preço na mesma linha -->
+            <div class="row">
+                <!-- Fornecedor -->
+                <div class="col-md-5 form-group">
+                    <label asp-for="SupplierId" class="control-label"></label>
+                    <select asp-for="SupplierId" class="form-select" asp-items="@(new SelectList(Model.Suppliers, "Id", "Name"))">
+                        <option value="">Selecione um fornecedor</option>
+                    </select>
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                </div>
+
+                <!-- Nome -->
+                <div class="col-md-5 form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Preço -->
+                <div class="col-md-2 form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Linha 2: Descrição (Linha própria) -->
+            <div class="row">
+                <div class="col-10 form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" style="width:100%"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="Active" />
+                        <label class="form-check-label" asp-for="Active">
+                            @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <hr />
+                <div class="form-group">
+                    <input type="submit" value="Gravar" class="btn btn-primary" />
+                    <a class="btn btn-info" asp-action="Index">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

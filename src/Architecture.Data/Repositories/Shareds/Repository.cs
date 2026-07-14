@@ -33,29 +33,26 @@ namespace Architecture.Data.Repositories.Shareds
             return await DbSet.FindAsync(id);
         }
 
-        // Metodosde persistencia
+        // Metodos de persistencia
+        // Apenas marcam o estado no ChangeTracker - quem grava é o IUnitOfWork.Commit(),
+        // para que várias operações do mesmo caso de uso sejam persistidas atomicamente.
 
-        public async Task Add(TEntity entity)
+        public Task Add(TEntity entity)
         {
             DbSet.Add(entity);
-            await SaveChanges();
+            return Task.CompletedTask;
         }
 
-        public async Task Update(TEntity entity)
+        public Task Update(TEntity entity)
         {
             DbSet.Update(entity);
-            await SaveChanges();
+            return Task.CompletedTask;
         }
 
-        public async Task Remove(Guid id)
+        public Task Remove(Guid id)
         {
             DbSet.Remove(new TEntity { Id = id });
-            await SaveChanges();
-        }
-
-        public async Task<int> SaveChanges()
-        {
-           return await Db.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public void Dispose()

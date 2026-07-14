@@ -8,10 +8,26 @@ namespace Architecture.Business.Services.Shareds
     public abstract class BaseService
     {
         private readonly INotifierService _notifier;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BaseService(INotifierService notifier)
+        public BaseService(INotifierService notifier, IUnitOfWork unitOfWork)
         {
             _notifier = notifier;
+            _unitOfWork = unitOfWork;
+        }
+
+        // Grava, numa única transação, todas as operações que os repositórios acumularam
+        // no ChangeTracker durante o caso de uso corrente.
+        protected async Task<bool> Commit()
+        {
+            var success = await _unitOfWork.Commit();
+
+            if (!success)
+            {
+                Notify("Ocorreu um erro ao gravar os dados. Tente novamente.");
+            }
+
+            return success;
         }
 
         protected void Notify(ValidationResult validationResult)

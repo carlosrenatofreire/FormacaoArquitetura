@@ -1,0 +1,29 @@
+@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <h5 class="pt-2">Opa! Algo deu errado :(</h5>
+
+        <ul class="list-unstyled mt-2 mb-0 text-danger">
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    <li class="d-flex align-items-center gap-2 mb-1">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>@error.ErrorMessage</span>
+                    </li>
+                }
+            }
+        </ul>
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <h5 class="m-0 pe-4">@TempData["Sucesso"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
