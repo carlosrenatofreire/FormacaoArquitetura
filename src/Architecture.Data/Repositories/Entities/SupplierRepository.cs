@@ -17,6 +17,15 @@ namespace Architecture.Data.Repositories.Entities
                  .FirstOrDefaultAsync(a => a.SupplierId == supplierId);
         }
 
+        public async Task<IEnumerable<Supplier>> GetAllSuppliersAndProductsAndAddresses()
+        {
+            return await Db.Suppliers.AsNoTracking()
+                .Include(s => s.Products)
+                .Include(s => s.Address)
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
+
         public async Task<Supplier> GetSupplierAndAddress(Guid id)
         {
             return await Db.Suppliers.AsNoTracking()

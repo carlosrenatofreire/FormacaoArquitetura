@@ -8,6 +8,7 @@ namespace Architecture.Business.Interfaces.Internals.Entities
     {
         Task<Supplier> GetSupplierAndAddress(Guid id);
         Task<Supplier> GetSupplierAndProductsAndAddress(Guid id);
+        Task<IEnumerable<Supplier>> GetAllSuppliersAndProductsAndAddresses();
 
         Task<Address> GetAddressBySupplierId(Guid supplierId);
         Task RemoveSupplierAddress(Address address);

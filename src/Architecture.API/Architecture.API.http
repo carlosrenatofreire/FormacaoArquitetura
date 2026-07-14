@@ -1,6 +1,106 @@
-@Architecture.API_HostAddress = http://localhost:5149
+@Architecture.API_HostAddress = http://localhost:5119
 
-GET {{Architecture.API_HostAddress}}/weatherforecast/
+### Listar todos os fornecedores
+GET {{Architecture.API_HostAddress}}/api/Supplier
 Accept: application/json
+
+###
+
+### Obter um fornecedor por Id
+GET {{Architecture.API_HostAddress}}/api/Supplier/92ef052f-ef98-40eb-ef9b-08dee102798a
+Accept: application/json
+
+###
+
+### Criar um fornecedor
+POST {{Architecture.API_HostAddress}}/api/Supplier
+Content-Type: application/json
+
+{
+  "name": "Fornecedor Teste",
+  "document": "123456789",
+  "supplierType": 1,
+  "active": true,
+  "address": {
+    "street": "Rua das Flores",
+    "number": "123",
+    "complement": "",
+    "neighborhood": "Centro",
+    "postalCode": "12345678",
+    "city": "Lisboa",
+    "state": "Lisboa"
+  }
+}
+
+###
+
+### Atualizar um fornecedor
+PUT {{Architecture.API_HostAddress}}/api/Supplier/92ef052f-ef98-40eb-ef9b-08dee102798a
+Content-Type: application/json
+
+{
+  "id": "92ef052f-ef98-40eb-ef9b-08dee102798a",
+  "name": "JAP SERVI�OS PARTILHADOS S.A",
+  "document": "515951307",
+  "supplierType": 2,
+  "active": true
+}
+
+###
+
+### Remover um fornecedor
+DELETE {{Architecture.API_HostAddress}}/api/Supplier/f83a30c6-95bc-4030-487d-08dee1a8dad1
+
+###
+
+### Listar todos os produtos
+GET {{Architecture.API_HostAddress}}/api/Product
+Accept: application/json
+
+###
+
+### Obter um produto por Id
+GET {{Architecture.API_HostAddress}}/api/Product/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+###
+
+### Listar produtos de um fornecedor
+GET {{Architecture.API_HostAddress}}/api/Product/supplier/92ef052f-ef98-40eb-ef9b-08dee102798a
+Accept: application/json
+
+###
+
+### Criar um produto
+POST {{Architecture.API_HostAddress}}/api/Product
+Content-Type: application/json
+
+{
+  "supplierId": "92ef052f-ef98-40eb-ef9b-08dee102798a",
+  "name": "Produto Teste",
+  "description": "Descrição do produto teste",
+  "price": 10.50,
+  "active": true
+}
+
+###
+
+### Atualizar um produto
+PUT {{Architecture.API_HostAddress}}/api/Product/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "supplierId": "92ef052f-ef98-40eb-ef9b-08dee102798a",
+  "name": "Produto Teste Atualizado",
+  "description": "Descrição atualizada",
+  "price": 15.90,
+  "active": true
+}
+
+###
+
+### Remover um produto
+DELETE {{Architecture.API_HostAddress}}/api/Product/00000000-0000-0000-0000-000000000000
 
 ###
