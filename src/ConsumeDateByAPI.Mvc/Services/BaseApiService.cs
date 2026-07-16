@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace ConsumeDateByAPI.Mvc.Services
 {
-    public abstract class ApiServiceBase
+    public abstract class BaseApiService
     {
         protected static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 

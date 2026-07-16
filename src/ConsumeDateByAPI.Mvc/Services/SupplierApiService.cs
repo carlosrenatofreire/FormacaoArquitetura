@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace ConsumeDateByAPI.Mvc.Services
 {
-    public class SupplierApiService : ApiServiceBase, ISupplierApiService
+    public class SupplierApiService : BaseApiService, ISupplierApiService
     {
         private readonly HttpClient _httpClient;
 

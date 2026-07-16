@@ -1,11 +1,10 @@
 using ConsumeDateByAPI.Mvc.Services.Interfaces;
 using ConsumeDateByAPI.Mvc.ViewModels;
 using System.Net;
-using System.Net.Http.Json;
 
 namespace ConsumeDateByAPI.Mvc.Services
 {
-    public class ProductApiService : ApiServiceBase, IProductApiService
+    public class ProductApiService : BaseApiService, IProductApiService
     {
         private readonly HttpClient _httpClient;
 
