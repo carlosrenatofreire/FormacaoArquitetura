@@ -8,7 +8,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="16.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+		<PackageReference Include="Microsoft.OpenApi" Version="2.11.0" />
 		<!-- Instalamos APENAS a UI do Swagger, sem o gerador do Swashbuckle -->
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
